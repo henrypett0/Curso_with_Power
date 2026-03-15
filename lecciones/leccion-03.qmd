@@ -153,58 +153,217 @@ resultados <- data.frame(
 # library(ggplot2) # descomenta si necesitas cargar ggplot2
 # Tu código para crear gráficos
 
-## Practica Interactiva
-
-Escribe tu codigo R para cada ejercicio y luego genera ejercicios adaptativos basados en tus respuestas.
 
 <style>
-.exercise-input { margin: 1.5rem 0; padding: 1rem; border: 1px solid #e5e7eb; border-radius: 8px; background: #f9fafb; }
-.exercise-input label { display: block; font-weight: 600; margin-bottom: 0.5rem; color: #374151; }
-.exercise-input textarea { width: 100%; min-height: 120px; padding: 0.75rem; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem; border: 1px solid #d1d5db; border-radius: 6px; background: #1e1e1e; color: #d4d4d4; line-height: 1.5; resize: vertical; }
-.exercise-input textarea:focus { outline: none; border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
-#generate-btn { display: block; margin: 1.5rem auto; padding: 0.75rem 2rem; background: #7c3aed; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+.exercise-interactive {
+  margin: 1.5rem 0 2.5rem 0;
+  padding: 1.25rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f9fafb;
+}
+.exercise-interactive label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #374151;
+  font-size: 0.9rem;
+}
+.exercise-interactive textarea {
+  width: 100%;
+  min-height: 140px;
+  padding: 0.75rem;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.85rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  line-height: 1.5;
+  resize: vertical;
+  box-sizing: border-box;
+}
+.exercise-interactive textarea:focus {
+  outline: none;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+}
+.verify-btn {
+  display: inline-block;
+  margin: 0.75rem 0.5rem 0.5rem 0;
+  padding: 0.5rem 1.5rem;
+  background: #059669;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.verify-btn:hover { background: #047857; }
+.verify-btn:disabled { background: #6ee7b7; cursor: not-allowed; }
+.verify-spinner {
+  display: none;
+  margin-left: 0.5rem;
+  color: #059669;
+  font-size: 0.85rem;
+}
+.exercise-feedback {
+  margin-top: 0.75rem;
+}
+.exercise-feedback .feedback-content {
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #d1d5db;
+  background: white;
+}
+.exercise-feedback .feedback-content.correcto {
+  border-left-color: #059669;
+  background: #f0fdf4;
+}
+.exercise-feedback .feedback-content.parcial {
+  border-left-color: #d97706;
+  background: #fffbeb;
+}
+.exercise-feedback .feedback-content.incorrecto {
+  border-left-color: #dc2626;
+  background: #fef2f2;
+}
+.exercise-feedback .feedback-status {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.exercise-feedback .feedback-hint {
+  color: #6b7280;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+#generate-section {
+  text-align: center;
+  margin: 3rem 0 1rem 0;
+  padding: 2rem 1.5rem;
+  border-top: 2px solid #e5e7eb;
+}
+#generate-btn {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: #7c3aed;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
 #generate-btn:hover { background: #6d28d9; }
 #generate-btn:disabled { background: #a78bfa; cursor: not-allowed; }
-#adaptive-results { margin-top: 2rem; }
-#adaptive-results .ejercicio-adaptativo { margin: 1.5rem 0; padding: 1.25rem; border-left: 4px solid #7c3aed; background: #faf5ff; border-radius: 0 8px 8px 0; }
+#spinner-adaptive {
+  display: none;
+  color: #7c3aed;
+  margin: 1rem 0;
+}
+#adaptive-results { margin-top: 2rem; text-align: left; }
+#adaptive-results .ejercicio-adaptativo {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-left: 4px solid #7c3aed;
+  background: #faf5ff;
+  border-radius: 0 8px 8px 0;
+}
 #adaptive-results h4 { color: #6d28d9; margin-bottom: 0.5rem; }
 #adaptive-results pre { background: #1e1e1e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
 #adaptive-results code { color: #d4d4d4; font-size: 0.85rem; }
-#spinner-msg { text-align: center; color: #7c3aed; display: none; margin: 1rem 0; }
 </style>
 
-<div class="exercise-input">
-  <label>Tu respuesta al Ejercicio 1:</label>
-  <textarea id="answer-1" placeholder="# Escribe tu codigo R aqui..."></textarea>
+<div id="generate-section">
+  <p style="color: #6b7280; margin-bottom: 1rem;">Completa y verifica los ejercicios de arriba, luego genera ejercicios adaptativos basados en tus respuestas.</p>
+  <button id="generate-btn" onclick="generateAdaptive()">Generar Ejercicios Adaptativos</button>
+  <p id="spinner-adaptive">Analizando tus respuestas y generando ejercicios personalizados...</p>
 </div>
-
-<div class="exercise-input">
-  <label>Tu respuesta al Ejercicio 2:</label>
-  <textarea id="answer-2" placeholder="# Escribe tu codigo R aqui..."></textarea>
-</div>
-
-<div class="exercise-input">
-  <label>Tu respuesta al Ejercicio 3:</label>
-  <textarea id="answer-3" placeholder="# Escribe tu codigo R aqui..."></textarea>
-</div>
-
-<button id="generate-btn" onclick="generateAdaptive()">Generar 3 Ejercicios de Practica</button>
-<p id="spinner-msg">Analizando tus respuestas y generando ejercicios...</p>
 
 <div id="adaptive-results"></div>
 
 <script>
 const BACKEND_URL = "https://curso-with-power.onrender.com";
 
+document.addEventListener("DOMContentLoaded", function() {
+  var allH3 = document.querySelectorAll("h3");
+
+  allH3.forEach(function(h3) {
+    var match = h3.textContent.trim().match(/^Ejercicio\s+(\d+)/);
+    if (!match) return;
+
+    var num = parseInt(match[1]);
+    var section = h3.closest("section");
+    var container = section || h3.parentElement;
+    var description = container.textContent.trim().substring(0, 2000);
+
+    var block = document.createElement("div");
+    block.className = "exercise-interactive";
+    block.setAttribute("data-exercise-num", num);
+    block.setAttribute("data-description", description);
+    block.innerHTML =
+      '<label for="answer-' + num + '">Tu respuesta al Ejercicio ' + num + ':</label>' +
+      '<textarea id="answer-' + num + '" placeholder="# Escribe tu codigo R aqui..."></textarea>' +
+      '<div>' +
+        '<button class="verify-btn" id="verify-btn-' + num + '" onclick="verifyExercise(' + num + ')">Verificar Ejercicio ' + num + '</button>' +
+        '<span class="verify-spinner" id="spinner-' + num + '">Verificando...</span>' +
+      '</div>' +
+      '<div class="exercise-feedback" id="feedback-' + num + '"></div>';
+
+    container.appendChild(block);
+  });
+});
+
+async function verifyExercise(num) {
+  var btn = document.getElementById("verify-btn-" + num);
+  var spinner = document.getElementById("spinner-" + num);
+  var feedback = document.getElementById("feedback-" + num);
+  var code = document.getElementById("answer-" + num).value;
+  var block = document.querySelector('[data-exercise-num="' + num + '"]');
+  var description = block ? block.getAttribute("data-description") : "";
+
+  btn.disabled = true;
+  btn.textContent = "Verificando...";
+  spinner.style.display = "inline";
+  feedback.innerHTML = "";
+
+  try {
+    var resp = await fetch(BACKEND_URL + "/api/verify-exercise", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        exercise_description: description,
+        student_code: code
+      })
+    });
+    var data = await resp.json();
+    if (data.error) {
+      feedback.innerHTML = '<div class="feedback-content incorrecto"><p style="color:#dc2626">Error: ' + data.error + '</p></div>';
+    } else {
+      feedback.innerHTML = data.feedback_html;
+    }
+  } catch (err) {
+    feedback.innerHTML = '<div class="feedback-content incorrecto"><p style="color:#dc2626">Error de conexion. Verifica que el servidor este activo.</p></div>';
+  }
+
+  btn.disabled = false;
+  btn.textContent = "Verificar Ejercicio " + num;
+  spinner.style.display = "none";
+}
+
 async function generateAdaptive() {
-  const btn = document.getElementById("generate-btn");
-  const spinner = document.getElementById("spinner-msg");
-  const results = document.getElementById("adaptive-results");
-  const answers = [
-    document.getElementById("answer-1").value,
-    document.getElementById("answer-2").value,
-    document.getElementById("answer-3").value
-  ];
+  var btn = document.getElementById("generate-btn");
+  var spinner = document.getElementById("spinner-adaptive");
+  var results = document.getElementById("adaptive-results");
+
+  var answers = [];
+  for (var i = 1; i <= 3; i++) {
+    var ta = document.getElementById("answer-" + i);
+    answers.push(ta ? ta.value : "");
+  }
 
   btn.disabled = true;
   btn.textContent = "Generando...";
@@ -212,7 +371,7 @@ async function generateAdaptive() {
   results.innerHTML = "";
 
   try {
-    const resp = await fetch(BACKEND_URL + "/api/student-exercises", {
+    var resp = await fetch(BACKEND_URL + "/api/student-exercises", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -220,18 +379,18 @@ async function generateAdaptive() {
         student_answers: answers
       })
     });
-    const data = await resp.json();
+    var data = await resp.json();
     if (data.error) {
-      results.innerHTML = "<p style=\"color:#b91c1c\">Error: " + data.error + "</p>";
+      results.innerHTML = '<p style="color:#dc2626">Error: ' + data.error + '</p>';
     } else {
       results.innerHTML = data.exercises_html;
     }
   } catch (err) {
-    results.innerHTML = "<p style=\"color:#b91c1c\">Error de conexion. Verifica que el servidor este activo.</p>";
+    results.innerHTML = '<p style="color:#dc2626">Error de conexion. Verifica que el servidor este activo.</p>';
   }
 
   btn.disabled = false;
-  btn.textContent = "Generar 3 Ejercicios de Practica";
+  btn.textContent = "Generar Ejercicios Adaptativos";
   spinner.style.display = "none";
 }
 </script>
