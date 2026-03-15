@@ -218,7 +218,6 @@ def _get_interactive_html() -> str:
 
 Escribe tu codigo R para cada ejercicio y luego genera ejercicios adaptativos basados en tus respuestas.
 
-```{{=html}}
 <style>
 .exercise-input {{ margin: 1.5rem 0; padding: 1rem; border: 1px solid #e5e7eb; border-radius: 8px; background: #f9fafb; }}
 .exercise-input label {{ display: block; font-weight: 600; margin-bottom: 0.5rem; color: #374151; }}
@@ -297,7 +296,6 @@ async function generateAdaptive() {{
   spinner.style.display = "none";
 }}
 </script>
-```
 '''
 
 
