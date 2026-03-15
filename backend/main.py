@@ -3,8 +3,10 @@ import logging
 from pathlib import Path
 
 from fastapi import FastAPI, Request, UploadFile
-from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel
 
 from services import claude_service, github_service
 
@@ -12,6 +14,15 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Generador de Lecciones")
+
+# CORS: allow GitHub Pages site to call this API
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["POST"],
+    allow_headers=["Content-Type"],
+)
+
 templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
 
 MAX_PDF_SIZE = 32 * 1024 * 1024  # 32 MB
@@ -107,3 +118,41 @@ async def publish_lesson(request: Request):
             "file_url": file_url,
         },
     )
+
+
+class ExercisesRequest(BaseModel):
+    qmd_content: str
+
+
+class StudentExercisesRequest(BaseModel):
+    lesson_content: str
+    student_answers: list[str]
+
+
+@app.post("/generate-exercises")
+async def generate_exercises(req: ExercisesRequest):
+    try:
+        exercises = await asyncio.to_thread(
+            claude_service.generate_exercises, req.qmd_content
+        )
+        logger.info("Ejercicios adicionales generados exitosamente")
+        return JSONResponse({"exercises": exercises})
+    except Exception as e:
+        logger.exception("Error al generar ejercicios")
+        return JSONResponse({"error": str(e)}, status_code=500)
+
+
+@app.post("/api/student-exercises")
+async def student_exercises(req: StudentExercisesRequest):
+    """Called from GitHub Pages: students submit answers, get adaptive exercises."""
+    try:
+        exercises_html = await asyncio.to_thread(
+            claude_service.generate_student_exercises,
+            req.lesson_content,
+            req.student_answers,
+        )
+        logger.info("Ejercicios adaptativos generados para estudiante")
+        return JSONResponse({"exercises_html": exercises_html})
+    except Exception as e:
+        logger.exception("Error al generar ejercicios para estudiante")
+        return JSONResponse({"error": str(e)}, status_code=500)

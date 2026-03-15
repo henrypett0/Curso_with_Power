@@ -66,7 +66,7 @@
             font-size: 0.85rem;
             line-height: 1.6;
             resize: vertical;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             background: #fafafa;
             tab-size: 2;
         }
@@ -78,6 +78,7 @@
         .actions {
             display: flex;
             gap: 1rem;
+            margin-top: 1rem;
         }
         .btn {
             padding: 0.75rem 1.5rem;
@@ -87,6 +88,8 @@
             cursor: pointer;
             border: none;
             transition: background 0.2s;
+            text-decoration: none;
+            text-align: center;
         }
         .btn-primary {
             background: #16a34a;
@@ -94,11 +97,31 @@
             flex: 1;
         }
         .btn-primary:hover { background: #15803d; }
+        .btn-exercise {
+            background: #7c3aed;
+            color: white;
+        }
+        .btn-exercise:hover { background: #6d28d9; }
+        .btn-exercise:disabled {
+            background: #a78bfa;
+            cursor: not-allowed;
+        }
         .btn-secondary {
             background: #e5e7eb;
             color: #374151;
         }
         .btn-secondary:hover { background: #d1d5db; }
+        .exercise-info {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+        .spinner-text {
+            display: none;
+            font-size: 0.85rem;
+            color: #7c3aed;
+            margin-top: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -116,6 +139,13 @@
         <form action="/publish" method="post" id="publishForm">
             <input type="hidden" name="lesson_number" value="{{ lesson_number }}">
             <textarea name="qmd_content" id="editor">{{ qmd_content }}</textarea>
+
+            <p class="exercise-info">La lección incluye 3 ejercicios de R. Puedes generar 3 ejercicios adicionales de práctica.</p>
+            <button type="button" class="btn btn-exercise" id="exerciseBtn" onclick="generateExercises()">
+                Generar 3 Ejercicios Adicionales
+            </button>
+            <p class="spinner-text" id="exerciseSpinner">Generando ejercicios con Claude...</p>
+
             <div class="actions">
                 <a href="/" class="btn btn-secondary">Volver</a>
                 <button type="submit" class="btn btn-primary" id="publishBtn">Publicar Lección</button>
@@ -139,6 +169,40 @@
                 this.selectionStart = this.selectionEnd = start + 2;
             }
         });
+
+        async function generateExercises() {
+            var btn = document.getElementById('exerciseBtn');
+            var spinner = document.getElementById('exerciseSpinner');
+            var editor = document.getElementById('editor');
+
+            btn.disabled = true;
+            btn.textContent = 'Generando...';
+            spinner.style.display = 'block';
+
+            try {
+                var response = await fetch('/generate-exercises', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ qmd_content: editor.value })
+                });
+
+                var data = await response.json();
+
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                } else {
+                    editor.value = editor.value.trimEnd() + '\n\n' + data.exercises;
+                    editor.scrollTop = editor.scrollHeight;
+                    btn.textContent = 'Ejercicios Agregados';
+                }
+            } catch (err) {
+                alert('Error de conexión: ' + err.message);
+                btn.disabled = false;
+                btn.textContent = 'Generar 3 Ejercicios Adicionales';
+            }
+
+            spinner.style.display = 'none';
+        }
     </script>
 </body>
 </html>
