@@ -1,0 +1,433 @@
+---
+title: "Lección 5: La Magia del Interés Compuesto"
+description: "Acelera el proceso de generación de riqueza mediante el interés compuesto"
+date: "2026-03-15"
+---
+
+## El Poder del Interés Compuesto
+
+Inviertes tu dinero con el objetivo de que crezca en el tiempo. Ya sea acudiendo a la tasa de interés que te paga la institución financiera en la que lo inviertes pero, también, de acuerdo a la estrategia que sigas. Por ejemplo, si inviertes $5,000 a una tasa anual del 8% de ganancia, en el primer año, del $400 de intereses. Si tu decisión es retirar los intereses ganados y dejar la misma cantidad invertida; al concluir el segundo año tu capital generará, nuevamente, $400 si es que continúa sin cambios la tasa de interés a la que invertiste el primer año. Al tercer, cuarto, quinto año y hasta que lo decidas, vas a tener la misma cantidad invertida generándote los mismos intereses año tras año.
+
+Pero, el resultado financiero cambia si al cumplirse el primer año de la inversión decides no retirar el dinero invertido ni los intereses generados; en este caso, la inversión inicial del segundo año será de $5,400 y al final tendrás $5,832 porque la tasa de interés del 8% se aplicará sobre el capital inicial invertido más los intereses generados (en el primer año). Si mantienes la misma estrategia, al tercer año tendrás un importe de $6,299. Y así sucesivamente se incrementará el dinero en el tiempo, porque estás reinvirtiendo los intereses ganados, hasta que decidas retirarlo o venza el plazo que hayas trazado para la inversión. Esto es lo que se denomina *interés compuesto*, que no es otra cosa que ganar intereses sobre intereses, sumados al capital (dinero) invertido, acelerando su crecimiento en el tiempo.
+
+¿Cuánto puedes reunir? eso depende de la tasa de interés a la que inviertas y del plazo.
+
+En México las cuentas de ahorro pagan una tasa de interés muy, muy baja, pues si bien la tasa promedio es de 2%, en realidad a este porcentaje hay que restarle las comisiones, impuestos y hasta la inflación anual. Al contrastar rendimientos (tasas) hay que tener el cuidado de comparar manzanas con manzanas; es decir, hay que verificar que sea la tasa de interés neta pues ésta ya descontó las comisiones e impuestos. Los bancos suelen publicar, casi siempre, la tasa de interés bruta por lo que los rendimientos prometidos no son los efectivamente recibidos.
+
+## ¿Qué Pasa si Reinviertes los Intereses?
+
+Si inviertes $5,000 a una tasa anual del 8% y decides no retirar el dinero invertido ni los intereses generados, en cuatro años tendrás:
+
+| Año | Capital inicial | Intereses | Capital al final |
+|-----|----------------|-----------|------------------|
+| 1   | $5,000         | $400      | $5,400          |
+| 2   | $5,400         | $432      | $5,832          |
+| 3   | $5,832         | $467      | $6,299          |
+| 4   | $6,299         | $504      | $6,802          |
+
+Por eso, es importante fijarse en la tasa que paga cada instrumento de inversión para tomar la mejor decisión. Adicionalmente, considera la conveniencia de mezclar distintos instrumentos (tasas y plazos) para alcanzar con mayor certeza tus metas financieras.
+
+Siempre será mejor conseguir la mayor tasa de interés posible, pero para obtener todos los beneficios del interés compuesto es necesario invertir (poco o mucho, eso depende de cada quien) pero con la firme convicción de no tocar ese dinero por un largo, largísimo tiempo.
+
+Aquí entra en juego otra variable, y es la aportación de capital —nuevos montos de inversión— que realices periódicamente (mensual, bimestral, trimestral, semestral o anual). En este caso, el efecto del interés compuesto acelera aún más el crecimiento del dinero (generación de riqueza), y entre más largo sea el plazo, más espectaculares serán los rendimientos que se puedan obtener.
+
+El interés compuesto actúa como uno de tus principales aliados en el logro de metas financieras de mediano y largo plazo (más de cinco años).
+
+Ahora bien, no sólo en los instrumentos de inversión de deuda se aprecia el "efecto" positivo del interés compuesto; éste también puede observarse en las acciones de una sociedad de inversión o una Siefore, pues su valor se revaloriza en el tiempo (si se invierte y no se retira la inversión ni los rendimientos ganados por un largo período).
+
+Evalúa las distintas alternativas que tienes a tu alcance para seleccionar la mejor.
+
+## La Regla del 72
+
+Es una fórmula muy sencilla que ayuda a saber, sin necesidad de tantos cálculos, en cuánto tiempo se duplicará una inversión; esto, de acuerdo a la tasa en la que se invirtió, considerando que se está dejando capitalizar a través del interés compuesto. El resultado no es exacto pero sí bastante aproximado.
+
+Por ejemplo: si una persona invierte $5,000 a una tasa del 6%, al dividir 72 entre 6 obtenemos que será en 12 años cuando tenga $10,000; y en 18 años $15,000. Obviamente, mientras más alta es la tasa, menor será el tiempo requerido para duplicar la inversión.
+
+## Cuánto Quieres: Tú lo Decides
+
+Ahora conoces los beneficios de olvidarte por algún tiempo de los intereses generados por tu inversión y dejarlos que sigan dándote más rendimientos, pero también que existen otras variables que determinarán la cantidad que logres acumular. Éstas son: 1) el plazo, 2) la tasa de interés y 3) la cantidad que decidas invertir de manera periódica.
+
+### Ejemplo de Pedro
+
+Pedro, de 25 años, desea saber cuánto dinero puede acumular en el tiempo si invierte $100 mensuales, y cuánto si hace un mayor esfuerzo y aporta $500 por un período de 40 años, pues su meta es reunir recursos para complementar su retiro programado a los 65 años.
+
+Los gráficos muestran diferentes escenarios de inversión con tasas del 4% y 6% durante períodos de 10, 20, 30 y 40 años:
+
+**Con tasa del 4%:**
+- 10 años: $13,272 (inversión mensual $100) / $66,360 (inversión mensual $500)
+- 20 años: $29,480 (inversión mensual $100) / $147,398 (inversión mensual $500)
+- 30 años: $49,273 (inversión mensual $100) / $246,363 (inversión mensual $500)
+- 40 años: $73,444 (inversión mensual $100) / $367,218 (inversión mensual $500)
+
+**Con tasa del 6%:**
+- 10 años: $14,725 (inversión mensual $100) / $73,625 (inversión mensual $500)
+- 20 años: $36,677 (inversión mensual $100) / $183,387 (inversión mensual $500)
+- 30 años: $69,405 (inversión mensual $100) / $347,025 (inversión mensual $500)
+- 40 años: $118,196 (inversión mensual $100) / $590,981 (inversión mensual $500)
+
+Puedes apreciar el efecto del interés compuesto sobre el dinero a medida que transcurre el tiempo, pero también la importancia que reviste la búsqueda de instrumentos financieros que te "paguen" los mejores rendimientos por tu dinero.
+
+La diferencia entre el acumulado con la tasa de interés más baja (2%) y la más alta (6%) en un plazo de 40 años es de 171%, es decir de $125,645 en el caso de la inversión mensual de $100; y de $628,222 en el de la inversión mensual de $500. Cantidades considerables ¿no es cierto?
+
+## Ejercicios en R
+
+### Ejercicio 1: Cálculo básico de interés compuesto
+
+Calcule el valor futuro de una inversión inicial de $5,000 con una tasa de interés anual del 8% durante 4 años, reinvirtiendo todos los intereses ganados. Compare este resultado con el interés simple.
+
+```r
+# Definir variables iniciales
+capital_inicial <- 5000
+tasa_anual <- 0.08
+anos <- 4
+
+# Cálculo de interés compuesto
+valor_futuro_compuesto <- capital_inicial * (1 + tasa_anual)^anos
+
+# Cálculo de interés simple para comparación  
+valor_futuro_simple <- capital_inicial * (1 + tasa_anual * anos)
+
+# Mostrar resultados
+print(paste("Valor futuro con interés compuesto:", valor_futuro_compuesto))
+print(paste("Valor futuro con interés simple:", valor_futuro_simple))
+print(paste("Diferencia:", valor_futuro_compuesto - valor_futuro_simple))
+```
+
+### Ejercicio 2: Aplicación de la regla del 72
+
+Implemente la regla del 72 para diferentes tasas de interés y calcule el tiempo exacto de duplicación usando la fórmula de interés compuesto. Compare ambos métodos para validar la aproximación de la regla del 72.
+
+```r
+# Vector de tasas de interés a evaluar
+tasas <- c(0.04, 0.06, 0.08, 0.10, 0.12)
+
+# Crear data frame para almacenar resultados
+resultados <- data.frame(
+  tasa = tasas,
+  regla_72 = numeric(length(tasas)),
+  tiempo_exacto = numeric(length(tasas)),
+  diferencia = numeric(length(tasas))
+)
+
+# Calcular para cada tasa
+for(i in 1:length(tasas)) {
+  tasa <- tasas[i] * 100  # Convertir a porcentaje
+  
+  # Regla del 72
+  resultados$regla_72[i] <- 72 / tasa
+  
+  # Tiempo exacto usando logaritmos: log(2) / log(1 + r)
+  resultados$tiempo_exacto[i] <- log(2) / log(1 + tasas[i])
+  
+  # Diferencia entre métodos
+  resultados$diferencia[i] <- abs(resultados$regla_72[i] - resultados$tiempo_exacto[i])
+}
+
+print(resultados)
+```
+
+### Ejercicio 3: Simulación de ahorro periódico con diferentes escenarios
+
+Reproduzca el ejemplo de Pedro creando una función que calcule el valor futuro de inversiones mensuales bajo diferentes combinaciones de monto mensual, tasa de interés y período de tiempo. Genere un gráfico comparativo de los resultados.
+
+```r
+# Función para calcular valor futuro de anualidades
+calcular_valor_futuro_anualidad <- function(pago_mensual, tasa_anual, anos) {
+  tasa_mensual <- tasa_anual / 12
+  num_pagos <- anos * 12
+  valor_futuro <- pago_mensual * (((1 + tasa_mensual)^num_pagos - 1) / tasa_mensual)
+  return(valor_futuro)
+}
+
+# Definir escenarios
+pagos_mensuales <- c(100, 500)
+tasas <- c(0.04, 0.06)
+anos <- c(10, 20, 30, 40)
+
+# Crear matriz de resultados
+resultados_matriz <- array(0, dim = c(length(anos), length(tasas), length(pagos_mensuales)))
+dimnames(resultados_matriz) <- list(
+  paste(anos, "años"),
+  paste(tasas * 100, "%"),
+  paste("$", pagos_mensuales)
+)
+
+# Calcular todos los escenarios
+for(i in 1:length(anos)) {
+  for(j in 1:length(tasas)) {
+    for(k in 1:length(pagos_mensuales)) {
+      resultados_matriz[i, j, k] <- calcular_valor_futuro_anualidad(
+        pagos_mensuales[k], tasas[j], anos[i]
+      )
+    }
+  }
+}
+
+# Mostrar resultados en formato tabla
+print("Valor futuro por escenario:")
+print(resultados_matriz)
+
+# Crear gráfico comparativo
+library(ggplot2)
+datos_grafico <- expand.grid(
+  anos = anos,
+  tasa = tasas,
+  pago = pagos_mensuales
+)
+datos_grafico$valor <- as.vector(resultados_matriz)
+
+ggplot(datos_grafico, aes(x = anos, y = valor, color = factor(tasa), linetype = factor(pago))) +
+  geom_line(size = 1) +
+  geom_point(size = 3) +
+  labs(title = "Crecimiento del Capital con Inversiones Mensuales",
+       x = "Años de Inversión",
+       y = "Valor Futuro ($)",
+       color = "Tasa Anual",
+       linetype = "Pago Mensual") +
+  theme_minimal()
+
+<style>
+.exercise-interactive {
+  margin: 1.5rem 0 2.5rem 0;
+  padding: 1.25rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f9fafb;
+}
+.exercise-interactive label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #374151;
+  font-size: 0.9rem;
+}
+.exercise-interactive textarea {
+  width: 100%;
+  min-height: 140px;
+  padding: 0.75rem;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.85rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  line-height: 1.5;
+  resize: vertical;
+  box-sizing: border-box;
+}
+.exercise-interactive textarea:focus {
+  outline: none;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+}
+.verify-btn {
+  display: inline-block;
+  margin: 0.75rem 0.5rem 0.5rem 0;
+  padding: 0.5rem 1.5rem;
+  background: #059669;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.verify-btn:hover { background: #047857; }
+.verify-btn:disabled { background: #6ee7b7; cursor: not-allowed; }
+.verify-spinner {
+  display: none;
+  margin-left: 0.5rem;
+  color: #059669;
+  font-size: 0.85rem;
+}
+.exercise-feedback {
+  margin-top: 0.75rem;
+}
+.exercise-feedback .feedback-content {
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #d1d5db;
+  background: white;
+}
+.exercise-feedback .feedback-content.correcto {
+  border-left-color: #059669;
+  background: #f0fdf4;
+}
+.exercise-feedback .feedback-content.parcial {
+  border-left-color: #d97706;
+  background: #fffbeb;
+}
+.exercise-feedback .feedback-content.incorrecto {
+  border-left-color: #dc2626;
+  background: #fef2f2;
+}
+.exercise-feedback .feedback-status {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.exercise-feedback .feedback-hint {
+  color: #6b7280;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+#generate-section {
+  text-align: center;
+  margin: 3rem 0 1rem 0;
+  padding: 2rem 1.5rem;
+  border-top: 2px solid #e5e7eb;
+}
+#generate-btn {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: #7c3aed;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#generate-btn:hover { background: #6d28d9; }
+#generate-btn:disabled { background: #a78bfa; cursor: not-allowed; }
+#spinner-adaptive {
+  display: none;
+  color: #7c3aed;
+  margin: 1rem 0;
+}
+#adaptive-results { margin-top: 2rem; text-align: left; }
+#adaptive-results .ejercicio-adaptativo {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-left: 4px solid #7c3aed;
+  background: #faf5ff;
+  border-radius: 0 8px 8px 0;
+}
+#adaptive-results h4 { color: #6d28d9; margin-bottom: 0.5rem; }
+#adaptive-results pre { background: #1e1e1e; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+#adaptive-results code { color: #d4d4d4; font-size: 0.85rem; }
+</style>
+
+<div id="generate-section">
+  <p style="color: #6b7280; margin-bottom: 1rem;">Completa y verifica los ejercicios de arriba, luego genera ejercicios adaptativos basados en tus respuestas.</p>
+  <button id="generate-btn" onclick="generateAdaptive()">Generar Ejercicios Adaptativos</button>
+  <p id="spinner-adaptive">Analizando tus respuestas y generando ejercicios personalizados...</p>
+</div>
+
+<div id="adaptive-results"></div>
+
+<script>
+const BACKEND_URL = "https://curso-with-power.onrender.com";
+
+document.addEventListener("DOMContentLoaded", function() {
+  const allH3 = document.querySelectorAll("h3");
+
+  allH3.forEach(function(h3) {
+    const match = h3.textContent.trim().match(/^Ejercicio\s+(\d+)/);
+    if (!match) return;
+
+    const num = parseInt(match[1]);
+
+    /* Quarto may wrap each heading in a <section>. Use that if available. */
+    const section = h3.closest("section");
+    const container = section || h3.parentElement;
+
+    /* Gather the description text for this exercise */
+    const description = container.textContent.trim().substring(0, 2000);
+
+    /* Build the interactive block */
+    const block = document.createElement("div");
+    block.className = "exercise-interactive";
+    block.setAttribute("data-exercise-num", num);
+    block.setAttribute("data-description", description);
+    block.innerHTML =
+      '<label for="answer-' + num + '">Tu respuesta al Ejercicio ' + num + ':</label>' +
+      '<textarea id="answer-' + num + '" placeholder="# Escribe tu codigo R aqui..."></textarea>' +
+      '<div>' +
+        '<button class="verify-btn" id="verify-btn-' + num + '" onclick="verifyExercise(' + num + ')">Verificar Ejercicio ' + num + '</button>' +
+        '<span class="verify-spinner" id="spinner-' + num + '">Verificando...</span>' +
+      '</div>' +
+      '<div class="exercise-feedback" id="feedback-' + num + '"></div>';
+
+    container.appendChild(block);
+  });
+});
+
+async function verifyExercise(num) {
+  var btn = document.getElementById("verify-btn-" + num);
+  var spinner = document.getElementById("spinner-" + num);
+  var feedback = document.getElementById("feedback-" + num);
+  var code = document.getElementById("answer-" + num).value;
+  var block = document.querySelector('[data-exercise-num="' + num + '"]');
+  var description = block ? block.getAttribute("data-description") : "";
+
+  btn.disabled = true;
+  btn.textContent = "Verificando...";
+  spinner.style.display = "inline";
+  feedback.innerHTML = "";
+
+  try {
+    var resp = await fetch(BACKEND_URL + "/api/verify-exercise", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        exercise_description: description,
+        student_code: code
+      })
+    });
+    var data = await resp.json();
+    if (data.error) {
+      feedback.innerHTML = '<div class="feedback-content incorrecto"><p style="color:#dc2626">Error: ' + data.error + '</p></div>';
+    } else {
+      feedback.innerHTML = data.feedback_html;
+    }
+  } catch (err) {
+    feedback.innerHTML = '<div class="feedback-content incorrecto"><p style="color:#dc2626">Error de conexion. Verifica que el servidor este activo.</p></div>';
+  }
+
+  btn.disabled = false;
+  btn.textContent = "Verificar Ejercicio " + num;
+  spinner.style.display = "none";
+}
+
+async function generateAdaptive() {
+  var btn = document.getElementById("generate-btn");
+  var spinner = document.getElementById("spinner-adaptive");
+  var results = document.getElementById("adaptive-results");
+
+  var answers = [];
+  for (var i = 1; i <= 3; i++) {
+    var ta = document.getElementById("answer-" + i);
+    answers.push(ta ? ta.value : "");
+  }
+
+  btn.disabled = true;
+  btn.textContent = "Generando...";
+  spinner.style.display = "block";
+  results.innerHTML = "";
+
+  try {
+    var resp = await fetch(BACKEND_URL + "/api/student-exercises", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        lesson_content: document.body.innerText.substring(0, 5000),
+        student_answers: answers
+      })
+    });
+    var data = await resp.json();
+    if (data.error) {
+      results.innerHTML = '<p style="color:#dc2626">Error: ' + data.error + '</p>';
+    } else {
+      results.innerHTML = data.exercises_html;
+    }
+  } catch (err) {
+    results.innerHTML = '<p style="color:#dc2626">Error de conexion. Verifica que el servidor este activo.</p>';
+  }
+
+  btn.disabled = false;
+  btn.textContent = "Generar Ejercicios Adaptativos";
+  spinner.style.display = "none";
+}
+</script>
