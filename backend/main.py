@@ -129,6 +129,11 @@ class StudentExercisesRequest(BaseModel):
     student_answers: list[str]
 
 
+class VerifyExerciseRequest(BaseModel):
+    exercise_description: str
+    student_code: str
+
+
 @app.post("/generate-exercises")
 async def generate_exercises(req: ExercisesRequest):
     try:
@@ -155,4 +160,20 @@ async def student_exercises(req: StudentExercisesRequest):
         return JSONResponse({"exercises_html": exercises_html})
     except Exception as e:
         logger.exception("Error al generar ejercicios para estudiante")
+        return JSONResponse({"error": str(e)}, status_code=500)
+
+
+@app.post("/api/verify-exercise")
+async def verify_exercise(req: VerifyExerciseRequest):
+    """Called from GitHub Pages: student submits code for one exercise, gets feedback."""
+    try:
+        feedback_html = await asyncio.to_thread(
+            claude_service.verify_exercise,
+            req.exercise_description,
+            req.student_code,
+        )
+        logger.info("Ejercicio verificado para estudiante")
+        return JSONResponse({"feedback_html": feedback_html})
+    except Exception as e:
+        logger.exception("Error al verificar ejercicio")
         return JSONResponse({"error": str(e)}, status_code=500)
