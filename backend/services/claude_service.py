@@ -120,49 +120,6 @@ Formato exacto:
 ```"""
 
 
-def generate_lesson_qmd(pdf_bytes: bytes, lesson_number: int) -> str:
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-
-    pdf_b64 = base64.standard_b64encode(pdf_bytes).decode("utf-8")
-    today = date.today().isoformat()
-
-    message = client.messages.create(
-        model="claude-sonnet-4-20250514",
-        max_tokens=8192,
-        system=SYSTEM_PROMPT,
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "document",
-                        "source": {
-                            "type": "base64",
-                            "media_type": "application/pdf",
-                            "data": pdf_b64,
-                        },
-                    },
-                    {
-                        "type": "text",
-                        "text": f"Convierte este PDF en una lección .qmd. El número de lección es {lesson_number}. La fecha de hoy es {today}.",
-                    },
-                ],
-            }
-        ],
-    )
-
-    content = message.content[0].text.strip()
-
-    # Strip accidental code block wrappers
-    content = re.sub(r"^```(?:qmd|markdown|yaml)?\s*\n", "", content)
-    content = re.sub(r"\n```\s*$", "", content)
-
-    if not content.startswith("---"):
-        raise ValueError("La respuesta de Claude no contiene frontmatter YAML válido")
-
-    return content
-
-
 STUDENT_EXERCISES_PROMPT = """Eres un tutor de programacion en R. Un estudiante acaba de completar ejercicios de una leccion y necesita mas practica.
 
 Se te proporcionara:
