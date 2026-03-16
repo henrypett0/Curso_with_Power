@@ -158,6 +158,7 @@ barplot(resultados_matriz, beside = TRUE, col = rainbow(length(periodos)),
         main = "Acumulación de Riqueza por Período y Tasa",
         xlab = "Tasa de Interés", ylab = "Valor Acumulado",
         legend.text = rownames(resultados_matriz))
+```
 
 <style>
 .exercise-verify-block {
