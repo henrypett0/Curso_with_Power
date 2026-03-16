@@ -121,42 +121,15 @@ inversion_unica <- 200 * 30 * 12  # $72,000
 
 
 <style>
-.exercise-interactive {
-  margin: 1.5rem 0 2.5rem 0;
-  padding: 1.25rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
+.exercise-verify-block {
+  margin: 0.75rem 0 2rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
   background: #f9fafb;
-}
-.exercise-interactive label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #374151;
-  font-size: 0.9rem;
-}
-.exercise-interactive textarea {
-  width: 100%;
-  min-height: 140px;
-  padding: 0.75rem;
-  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 0.85rem;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background: #1e1e1e;
-  color: #d4d4d4;
-  line-height: 1.5;
-  resize: vertical;
-  box-sizing: border-box;
-}
-.exercise-interactive textarea:focus {
-  outline: none;
-  border-color: #7c3aed;
-  box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+  border: 1px solid #e5e7eb;
 }
 .verify-btn {
   display: inline-block;
-  margin: 0.75rem 0.5rem 0.5rem 0;
   padding: 0.5rem 1.5rem;
   background: #059669;
   color: white;
@@ -244,7 +217,7 @@ inversion_unica <- 200 * 30 * 12  # $72,000
 </style>
 
 <div id="generate-section">
-  <p style="color: #6b7280; margin-bottom: 1rem;">Completa y verifica los ejercicios de arriba, luego genera ejercicios adaptativos basados en tus respuestas.</p>
+  <p style="color: #6b7280; margin-bottom: 1rem;">Escribe y ejecuta tu codigo R en los editores interactivos de arriba. Luego verifica cada ejercicio o genera ejercicios adaptativos.</p>
   <button id="generate-btn" onclick="generateAdaptive()">Generar Ejercicios Adaptativos</button>
   <p id="spinner-adaptive">Analizando tus respuestas y generando ejercicios personalizados...</p>
 </div>
@@ -252,9 +225,18 @@ inversion_unica <- 200 * 30 * 12  # $72,000
 <div id="adaptive-results"></div>
 
 <script>
-const BACKEND_URL = "https://curso-with-power.onrender.com";
+var BACKEND_URL = "https://curso-with-power.onrender.com";
 
-document.addEventListener("DOMContentLoaded", function() {
+function getCodeFromSection(container) {
+  var cmContents = container.querySelectorAll(".cm-content");
+  if (cmContents.length > 0) {
+    return cmContents[cmContents.length - 1].innerText || "";
+  }
+  var codeEl = container.querySelector("code");
+  return codeEl ? codeEl.textContent : "";
+}
+
+function initVerifyButtons() {
   var allH3 = document.querySelectorAll("h3");
 
   allH3.forEach(function(h3) {
@@ -264,32 +246,48 @@ document.addEventListener("DOMContentLoaded", function() {
     var num = parseInt(match[1]);
     var section = h3.closest("section");
     var container = section || h3.parentElement;
+
+    if (container.querySelector(".exercise-verify-block")) return;
+
     var description = container.textContent.trim().substring(0, 2000);
 
     var block = document.createElement("div");
-    block.className = "exercise-interactive";
+    block.className = "exercise-verify-block";
     block.setAttribute("data-exercise-num", num);
     block.setAttribute("data-description", description);
     block.innerHTML =
-      '<label for="answer-' + num + '">Tu respuesta al Ejercicio ' + num + ':</label>' +
-      '<textarea id="answer-' + num + '" placeholder="# Escribe tu codigo R aqui..."></textarea>' +
-      '<div>' +
-        '<button class="verify-btn" id="verify-btn-' + num + '" onclick="verifyExercise(' + num + ')">Verificar Ejercicio ' + num + '</button>' +
-        '<span class="verify-spinner" id="spinner-' + num + '">Verificando...</span>' +
-      '</div>' +
+      '<button class="verify-btn" id="verify-btn-' + num + '" onclick="verifyExercise(' + num + ')">Verificar Ejercicio ' + num + '</button>' +
+      '<span class="verify-spinner" id="spinner-' + num + '">Verificando...</span>' +
       '<div class="exercise-feedback" id="feedback-' + num + '"></div>';
 
     container.appendChild(block);
   });
-});
+}
+
+(function waitForEditors() {
+  var attempts = 0;
+  function tryInit() {
+    attempts++;
+    initVerifyButtons();
+    if (!document.querySelector(".cm-editor") && attempts < 30) {
+      setTimeout(tryInit, 500);
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function() { setTimeout(tryInit, 1000); });
+  } else {
+    setTimeout(tryInit, 1000);
+  }
+})();
 
 async function verifyExercise(num) {
   var btn = document.getElementById("verify-btn-" + num);
   var spinner = document.getElementById("spinner-" + num);
   var feedback = document.getElementById("feedback-" + num);
-  var code = document.getElementById("answer-" + num).value;
   var block = document.querySelector('[data-exercise-num="' + num + '"]');
   var description = block ? block.getAttribute("data-description") : "";
+  var section = block.closest("section") || block.parentElement;
+  var code = getCodeFromSection(section);
 
   btn.disabled = true;
   btn.textContent = "Verificando...";
@@ -300,10 +298,7 @@ async function verifyExercise(num) {
     var resp = await fetch(BACKEND_URL + "/api/verify-exercise", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        exercise_description: description,
-        student_code: code
-      })
+      body: JSON.stringify({ exercise_description: description, student_code: code })
     });
     var data = await resp.json();
     if (data.error) {
@@ -327,8 +322,13 @@ async function generateAdaptive() {
 
   var answers = [];
   for (var i = 1; i <= 3; i++) {
-    var ta = document.getElementById("answer-" + i);
-    answers.push(ta ? ta.value : "");
+    var block = document.querySelector('[data-exercise-num="' + i + '"]');
+    if (block) {
+      var section = block.closest("section") || block.parentElement;
+      answers.push(getCodeFromSection(section));
+    } else {
+      answers.push("");
+    }
   }
 
   btn.disabled = true;
@@ -340,10 +340,7 @@ async function generateAdaptive() {
     var resp = await fetch(BACKEND_URL + "/api/student-exercises", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        lesson_content: document.body.innerText.substring(0, 5000),
-        student_answers: answers
-      })
+      body: JSON.stringify({ lesson_content: document.body.innerText.substring(0, 5000), student_answers: answers })
     });
     var data = await resp.json();
     if (data.error) {
