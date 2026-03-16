@@ -513,9 +513,12 @@ def generate_lesson_qmd(pdf_bytes: bytes, lesson_number: int) -> str:
 
     content = message.content[0].text.strip()
 
-    # Strip accidental code block wrappers
-    content = re.sub(r"^```(?:qmd|markdown|yaml)?\s*\n", "", content)
-    content = re.sub(r"\n```\s*$", "", content)
+    # Strip accidental code block wrappers (e.g. ```qmd\n...\n```)
+    # Only strip trailing ``` if an opening wrapper was found and removed
+    opening = re.match(r"^```(?:qmd|markdown|yaml)\s*\n", content)
+    if opening:
+        content = content[opening.end():]
+        content = re.sub(r"\n```\s*$", "", content)
 
     if not content.startswith("---"):
         raise ValueError("La respuesta de Claude no contiene frontmatter YAML válido")
@@ -550,9 +553,11 @@ def generate_exercises(qmd_content: str) -> str:
 
     content = message.content[0].text.strip()
 
-    # Strip accidental code block wrappers
-    content = re.sub(r"^```(?:qmd|markdown|yaml)?\s*\n", "", content)
-    content = re.sub(r"\n```\s*$", "", content)
+    # Strip accidental code block wrappers (only if opening wrapper exists)
+    opening = re.match(r"^```(?:qmd|markdown|yaml)\s*\n", content)
+    if opening:
+        content = content[opening.end():]
+        content = re.sub(r"\n```\s*$", "", content)
 
     return content
 
