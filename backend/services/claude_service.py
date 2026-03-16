@@ -6,7 +6,7 @@ import anthropic
 
 from config import ANTHROPIC_API_KEY, BACKEND_URL
 
-SYSTEM_PROMPT = """Eres un asistente que convierte documentos PDF en lecciones para un curso en formato Quarto (.qmd).
+SYSTEM_PROMPT = """Eres un asistente que convierte documentos PDF en lecciones para un curso en formato Quarto (.qmd) con bloques de codigo R interactivos usando quarto-webr.
 
 Tu respuesta debe ser UNICAMENTE el contenido del archivo .qmd, sin explicaciones adicionales, sin bloques de codigo envolventes (no uses ```qmd o ```markdown alrededor), solo el contenido directo del archivo.
 
@@ -16,6 +16,8 @@ El archivo debe seguir exactamente este formato:
 title: "Lección {N}: {titulo extraido del contenido}"
 description: "{resumen de una linea del contenido}"
 date: "{fecha}"
+filters:
+  - webr
 ---
 
 ## {Primera sección}
@@ -32,7 +34,8 @@ date: "{fecha}"
 
 {descripcion del ejercicio en un solo parrafo}
 
-```r
+```{webr-r}
+# Comentarios guia para el estudiante
 # Tu código aquí
 
 ```
@@ -41,7 +44,8 @@ date: "{fecha}"
 
 {descripcion del ejercicio en un solo parrafo}
 
-```r
+```{webr-r}
+# Comentarios guia para el estudiante
 # Tu código aquí
 
 ```
@@ -50,28 +54,33 @@ date: "{fecha}"
 
 {descripcion del ejercicio en un solo parrafo}
 
-```r
+```{webr-r}
+# Comentarios guia para el estudiante
 # Tu código aquí
 
 ```
 
 Reglas:
-1. El YAML frontmatter debe tener exactamente tres campos: title, description, date
-2. El title debe empezar con "Lección {N}: " seguido del titulo del tema
-3. La description debe ser un resumen breve de una sola linea (maximo 100 caracteres)
-4. La date debe ser la fecha proporcionada en formato YYYY-MM-DD
-5. Usa encabezados ## para secciones principales y ### para subsecciones
-6. Convierte tablas del PDF a tablas Markdown
-7. Convierte codigo del PDF a bloques con el lenguaje apropiado (```python, ```r, etc.)
-8. Convierte listas del PDF a listas Markdown (- para viñetas, 1. para numeradas)
-9. Conserva el contenido en el idioma original del PDF
-10. No inventes contenido que no este en el PDF (excepto los ejercicios de R)
-11. No incluyas encabezados de pagina, pies de pagina, ni numeros de pagina del PDF
-12. No envuelvas tu respuesta en bloques de codigo
-13. SIEMPRE incluye una seccion final "## Ejercicios en R" con exactamente 3 ejercicios practicos de programacion en R relacionados con el contenido de la leccion
-14. Los ejercicios deben ser progresivos: el primero basico, el segundo intermedio, el tercero avanzado
-15. Cada ejercicio debe tener UNA descripcion breve en un solo parrafo seguida de UN SOLO bloque de codigo R con comentarios guia
-16. NO uses sub-encabezados dentro de los ejercicios, NO uses texto en negritas como sub-pasos. Cada ejercicio es: titulo (###), un parrafo descriptivo, y un bloque de codigo R"""
+1. El YAML frontmatter debe tener exactamente cuatro campos: title, description, date, filters
+2. El campo filters SIEMPRE debe ser exactamente: filters:\\n  - webr
+3. El title debe empezar con "Lección {N}: " seguido del titulo del tema
+4. La description debe ser un resumen breve de una sola linea (maximo 100 caracteres)
+5. La date debe ser la fecha proporcionada en formato YYYY-MM-DD
+6. Usa encabezados ## para secciones principales y ### para subsecciones
+7. Convierte tablas del PDF a tablas Markdown
+8. Convierte codigo R del PDF a bloques interactivos ```{webr-r} para que el estudiante pueda ejecutarlos
+9. Codigo en otros lenguajes (Python, SQL, etc.) usa bloques normales ```python, ```sql, etc.
+10. Convierte listas del PDF a listas Markdown (- para viñetas, 1. para numeradas)
+11. Conserva el contenido en el idioma original del PDF
+12. No inventes contenido que no este en el PDF (excepto los ejercicios de R)
+13. No incluyas encabezados de pagina, pies de pagina, ni numeros de pagina del PDF
+14. No envuelvas tu respuesta en bloques de codigo
+15. SIEMPRE incluye una seccion final "## Ejercicios en R" con exactamente 3 ejercicios practicos de programacion en R relacionados con el contenido de la leccion
+16. Los ejercicios deben ser progresivos: el primero basico, el segundo intermedio, el tercero avanzado
+17. Cada ejercicio debe tener UNA descripcion breve en un solo parrafo seguida de UN SOLO bloque ```{webr-r} con comentarios guia
+18. NO uses sub-encabezados dentro de los ejercicios, NO uses texto en negritas como sub-pasos
+19. TODOS los bloques de codigo R deben usar ```{webr-r} en lugar de ```r para ser interactivos
+20. Si el contenido del PDF incluye ejemplos de codigo R, usalos como bloques ```{webr-r} con datos de ejemplo para que el estudiante pueda experimentar"""
 
 
 EXERCISES_SYSTEM_PROMPT = """Eres un asistente que genera ejercicios adaptativos de programacion en R.
@@ -200,49 +209,23 @@ Reglas:
 def _get_interactive_html() -> str:
     """Return the interactive exercises HTML/JS block to append to .qmd files.
 
-    Uses JavaScript to find exercise headings on the rendered page and inject
-    a textarea + "Verificar" button after each one. At the bottom, a single
+    Since exercises use {webr-r} blocks (interactive R editors), the JS only
+    injects a "Verificar" button after each exercise. It reads the student's
+    code from the CodeMirror editor that webr creates. At the bottom, a
     "Generar Ejercicios Adaptativos" button sends all answers to the backend.
     """
     return f'''
 
 <style>
-.exercise-interactive {{
-  margin: 1.5rem 0 2.5rem 0;
-  padding: 1.25rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
+.exercise-verify-block {{
+  margin: 0.75rem 0 2rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
   background: #f9fafb;
-}}
-.exercise-interactive label {{
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #374151;
-  font-size: 0.9rem;
-}}
-.exercise-interactive textarea {{
-  width: 100%;
-  min-height: 140px;
-  padding: 0.75rem;
-  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 0.85rem;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background: #1e1e1e;
-  color: #d4d4d4;
-  line-height: 1.5;
-  resize: vertical;
-  box-sizing: border-box;
-}}
-.exercise-interactive textarea:focus {{
-  outline: none;
-  border-color: #7c3aed;
-  box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+  border: 1px solid #e5e7eb;
 }}
 .verify-btn {{
   display: inline-block;
-  margin: 0.75rem 0.5rem 0.5rem 0;
   padding: 0.5rem 1.5rem;
   background: #059669;
   color: white;
@@ -330,7 +313,7 @@ def _get_interactive_html() -> str:
 </style>
 
 <div id="generate-section">
-  <p style="color: #6b7280; margin-bottom: 1rem;">Completa y verifica los ejercicios de arriba, luego genera ejercicios adaptativos basados en tus respuestas.</p>
+  <p style="color: #6b7280; margin-bottom: 1rem;">Escribe y ejecuta tu codigo R en los editores interactivos de arriba. Luego verifica cada ejercicio o genera ejercicios adaptativos.</p>
   <button id="generate-btn" onclick="generateAdaptive()">Generar Ejercicios Adaptativos</button>
   <p id="spinner-adaptive">Analizando tus respuestas y generando ejercicios personalizados...</p>
 </div>
@@ -338,49 +321,86 @@ def _get_interactive_html() -> str:
 <div id="adaptive-results"></div>
 
 <script>
-const BACKEND_URL = "{BACKEND_URL}";
+var BACKEND_URL = "{BACKEND_URL}";
 
-document.addEventListener("DOMContentLoaded", function() {{
-  const allH3 = document.querySelectorAll("h3");
+/* Extract code from a CodeMirror 6 editor inside a container element */
+function getCodeFromSection(container) {{
+  /* Try CodeMirror 6 .cm-content (used by quarto-webr) */
+  var cmContents = container.querySelectorAll(".cm-content");
+  if (cmContents.length > 0) {{
+    /* Return code from the last editor in this section (the exercise editor) */
+    return cmContents[cmContents.length - 1].innerText || "";
+  }}
+  /* Fallback: try a regular code block */
+  var codeEl = container.querySelector("code");
+  return codeEl ? codeEl.textContent : "";
+}}
+
+function initVerifyButtons() {{
+  var allH3 = document.querySelectorAll("h3");
+  var exerciseFound = false;
 
   allH3.forEach(function(h3) {{
-    const match = h3.textContent.trim().match(/^Ejercicio\\s+(\\d+)/);
+    var match = h3.textContent.trim().match(/^Ejercicio\\s+(\\d+)/);
     if (!match) return;
+    exerciseFound = true;
 
-    const num = parseInt(match[1]);
+    var num = parseInt(match[1]);
+    var section = h3.closest("section");
+    var container = section || h3.parentElement;
 
-    /* Quarto may wrap each heading in a <section>. Use that if available. */
-    const section = h3.closest("section");
-    const container = section || h3.parentElement;
+    /* Skip if we already injected a button here */
+    if (container.querySelector(".exercise-verify-block")) return;
 
-    /* Gather the description text for this exercise */
-    const description = container.textContent.trim().substring(0, 2000);
+    var description = container.textContent.trim().substring(0, 2000);
 
-    /* Build the interactive block */
-    const block = document.createElement("div");
-    block.className = "exercise-interactive";
+    var block = document.createElement("div");
+    block.className = "exercise-verify-block";
     block.setAttribute("data-exercise-num", num);
     block.setAttribute("data-description", description);
     block.innerHTML =
-      '<label for="answer-' + num + '">Tu respuesta al Ejercicio ' + num + ':</label>' +
-      '<textarea id="answer-' + num + '" placeholder="# Escribe tu codigo R aqui..."></textarea>' +
-      '<div>' +
-        '<button class="verify-btn" id="verify-btn-' + num + '" onclick="verifyExercise(' + num + ')">Verificar Ejercicio ' + num + '</button>' +
-        '<span class="verify-spinner" id="spinner-' + num + '">Verificando...</span>' +
-      '</div>' +
+      '<button class="verify-btn" id="verify-btn-' + num + '" onclick="verifyExercise(' + num + ')">Verificar Ejercicio ' + num + '</button>' +
+      '<span class="verify-spinner" id="spinner-' + num + '">Verificando...</span>' +
       '<div class="exercise-feedback" id="feedback-' + num + '"></div>';
 
     container.appendChild(block);
   }});
-}});
+
+  return exerciseFound;
+}}
+
+/* Wait for webr CodeMirror editors to appear, then inject buttons */
+(function waitForEditors() {{
+  var attempts = 0;
+  var maxAttempts = 30; /* 15 seconds max */
+
+  function tryInit() {{
+    attempts++;
+    var hasEditors = document.querySelector(".cm-editor") !== null;
+    var hasExercises = initVerifyButtons();
+
+    if (!hasEditors && attempts < maxAttempts) {{
+      setTimeout(tryInit, 500);
+    }}
+  }}
+
+  if (document.readyState === "loading") {{
+    document.addEventListener("DOMContentLoaded", function() {{ setTimeout(tryInit, 1000); }});
+  }} else {{
+    setTimeout(tryInit, 1000);
+  }}
+}})();
 
 async function verifyExercise(num) {{
   var btn = document.getElementById("verify-btn-" + num);
   var spinner = document.getElementById("spinner-" + num);
   var feedback = document.getElementById("feedback-" + num);
-  var code = document.getElementById("answer-" + num).value;
   var block = document.querySelector('[data-exercise-num="' + num + '"]');
   var description = block ? block.getAttribute("data-description") : "";
+
+  /* Get code from the webr editor in this exercise's section */
+  var section = block.closest("section") || block.parentElement;
+  var code = getCodeFromSection(section);
 
   btn.disabled = true;
   btn.textContent = "Verificando...";
@@ -416,10 +436,16 @@ async function generateAdaptive() {{
   var spinner = document.getElementById("spinner-adaptive");
   var results = document.getElementById("adaptive-results");
 
+  /* Collect code from all exercise webr editors */
   var answers = [];
   for (var i = 1; i <= 3; i++) {{
-    var ta = document.getElementById("answer-" + i);
-    answers.push(ta ? ta.value : "");
+    var block = document.querySelector('[data-exercise-num="' + i + '"]');
+    if (block) {{
+      var section = block.closest("section") || block.parentElement;
+      answers.push(getCodeFromSection(section));
+    }} else {{
+      answers.push("");
+    }}
   }}
 
   btn.disabled = true;
@@ -493,6 +519,13 @@ def generate_lesson_qmd(pdf_bytes: bytes, lesson_number: int) -> str:
 
     if not content.startswith("---"):
         raise ValueError("La respuesta de Claude no contiene frontmatter YAML válido")
+
+    # Ensure webr filter is in frontmatter
+    if "filters:" not in content.split("---")[1]:
+        # Insert filters before the closing ---
+        parts = content.split("---", 2)
+        parts[1] = parts[1].rstrip() + "\nfilters:\n  - webr\n"
+        content = "---".join(parts)
 
     # Append interactive exercises section
     content += _get_interactive_html()
